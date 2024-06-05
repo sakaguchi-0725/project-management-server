@@ -11,7 +11,7 @@ import (
 )
 
 type TaskHandler interface {
-	GetAllTask(c echo.Context) error
+	GetAllTasks(c echo.Context) error
 	GetTaskById(c echo.Context) error
 	CreateTask(c echo.Context) error
 	UpdateTask(c echo.Context) error
@@ -33,8 +33,8 @@ func (t *taskHandler) DeleteTask(c echo.Context) error {
 }
 
 // GetAllTask implements TaskHandler.
-func (t *taskHandler) GetAllTask(c echo.Context) error {
-	tasks, err := t.tu.GetAllTask()
+func (t *taskHandler) GetAllTasks(c echo.Context) error {
+	tasks, err := t.tu.GetAllTasks()
 	if err != nil {
 		return err
 	}

@@ -7,7 +7,7 @@ import (
 )
 
 type TaskRepository interface {
-	GetAllTask() ([]domain.Task, error)
+	GetAllTasks() ([]domain.Task, error)
 	GetTaskById(taksId uint) (*domain.Task, error)
 	CreateTask(domain.Task) error
 	UpdateTask(domain.Task) (*domain.Task, error)
@@ -29,10 +29,10 @@ func (t *taskRepository) DeleteTask(taskId uint) error {
 }
 
 // GetAllTask implements TaskRepository.
-func (t *taskRepository) GetAllTask() ([]domain.Task, error) {
+func (t *taskRepository) GetAllTasks() ([]domain.Task, error) {
 	var tasks []domain.Task
-	if err := t.db.Find(&tasks); err.Error != nil {
-		return nil, err.Error
+	if err := t.db.Find(&tasks).Error; err != nil {
+		return nil, err
 	}
 
 	return tasks, nil

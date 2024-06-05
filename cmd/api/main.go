@@ -29,7 +29,7 @@ func main() {
 	taskUsecase := usecase.NewTaskUsecase(taskRepository)
 	taskHandler := handler.NewTaskHandler(taskUsecase)
 
-	t := e.Group("/task")
-	t.GET("", taskHandler.GetAllTask)
+	t := e.Group("/tasks")
+	t.GET("", taskHandler.GetAllTasks)
 	e.Logger.Fatal(e.Start(":8080"))
 }

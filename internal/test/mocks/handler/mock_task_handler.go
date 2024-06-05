@@ -62,18 +62,18 @@ func (mr *MockTaskHandlerMockRecorder) DeleteTask(c interface{}) *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteTask", reflect.TypeOf((*MockTaskHandler)(nil).DeleteTask), c)
 }
 
-// GetAllTask mocks base method.
-func (m *MockTaskHandler) GetAllTask(c echo.Context) error {
+// GetAllTasks mocks base method.
+func (m *MockTaskHandler) GetAllTasks(c echo.Context) error {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetAllTask", c)
+	ret := m.ctrl.Call(m, "GetAllTasks", c)
 	ret0, _ := ret[0].(error)
 	return ret0
 }
 
-// GetAllTask indicates an expected call of GetAllTask.
-func (mr *MockTaskHandlerMockRecorder) GetAllTask(c interface{}) *gomock.Call {
+// GetAllTasks indicates an expected call of GetAllTasks.
+func (mr *MockTaskHandlerMockRecorder) GetAllTasks(c interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetAllTask", reflect.TypeOf((*MockTaskHandler)(nil).GetAllTask), c)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetAllTasks", reflect.TypeOf((*MockTaskHandler)(nil).GetAllTasks), c)
 }
 
 // GetTaskById mocks base method.

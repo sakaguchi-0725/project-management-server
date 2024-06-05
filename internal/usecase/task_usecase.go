@@ -7,7 +7,7 @@ import (
 )
 
 type TaskUsecase interface {
-	GetAllTask() ([]domain.Task, error)
+	GetAllTasks() ([]domain.Task, error)
 	GetTaskById(taskId uint) (*domain.Task, error)
 	CreateTask(domain.Task) error
 	UpdateTask(domain.Task) (*domain.Task, error)
@@ -29,8 +29,8 @@ func (t *taskUsecase) DeleteTask(taskId uint) error {
 }
 
 // GetAllTask implements TaskUsecase.
-func (t *taskUsecase) GetAllTask() ([]domain.Task, error) {
-	tasks, err := t.tr.GetAllTask()
+func (t *taskUsecase) GetAllTasks() ([]domain.Task, error) {
+	tasks, err := t.tr.GetAllTasks()
 	if err != nil {
 		return nil, err
 	}
