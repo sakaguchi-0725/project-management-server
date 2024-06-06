@@ -21,6 +21,7 @@ func TestGetAllTasks(t *testing.T) {
 	res := []domain.Task{
 		{ID: 1, Title: "テスト001"},
 		{ID: 2, Title: "テスト002"},
+		{ID: 3, Title: "テスト003"},
 	}
 
 	t.Run("正常系", func(t *testing.T) {
