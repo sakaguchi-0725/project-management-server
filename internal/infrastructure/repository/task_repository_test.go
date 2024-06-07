@@ -1,6 +1,7 @@
 package repository_test
 
 import (
+	"fmt"
 	"log"
 	"os"
 	"testing"
@@ -17,7 +18,11 @@ var (
 )
 
 func TestMain(m *testing.M) {
-	db = testutil.NewTestDB()
+	db, err := testutil.NewTestDB()
+	if err != nil {
+		fmt.Printf("database connection error: %d", err)
+		return
+	}
 	repo = repository.NewTaskRepository(db)
 
 	status := m.Run()

@@ -2,13 +2,12 @@ package testutil
 
 import (
 	"fmt"
-	"log"
 
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
 
-func NewTestDB() *gorm.DB {
+func NewTestDB() (*gorm.DB, error) {
 	dsn := fmt.Sprintf(
 		"host=%s user=%s password=%s dbname=%s port=%s sslmode=disable",
 		"localhost",
@@ -20,10 +19,10 @@ func NewTestDB() *gorm.DB {
 
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
-		log.Fatalf("test database connection error: %v", err)
+		return nil, err
 	}
 
-	return db
+	return db, nil
 }
 
 func FlushRecords(db *gorm.DB, mdl interface{}) {
