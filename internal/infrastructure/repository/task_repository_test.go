@@ -58,6 +58,21 @@ func TestGetAllTasks(t *testing.T) {
 	})
 }
 
+func TestCreateTask(t *testing.T) {
+	t.Run("正常系", func(t *testing.T) {
+		defer testutil.FlushRecords(db, &domain.Task{})
+
+		req := domain.Task{
+			Title: "Createテスト",
+			Desc:  "テスト",
+		}
+
+		if err := repo.CreateTask(req); err != nil {
+			t.Errorf("Expected no error, got %d", err)
+		}
+	})
+}
+
 func createTestData(data []*domain.Task) {
 	for _, task := range data {
 		if err := db.Create(task).Error; err != nil {
