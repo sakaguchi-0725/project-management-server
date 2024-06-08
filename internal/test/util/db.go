@@ -3,6 +3,7 @@ package testutil
 import (
 	"fmt"
 
+	"github.com/sakaguchi-0725/go-todo/pkg/config"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
@@ -10,11 +11,11 @@ import (
 func NewTestDB() (*gorm.DB, error) {
 	dsn := fmt.Sprintf(
 		"host=%s user=%s password=%s dbname=%s port=%s sslmode=disable",
-		"localhost",
-		"postgres",
-		"postgres",
-		"todo",
-		"54321",
+		config.TestDB.Host,
+		config.TestDB.User,
+		config.TestDB.Passwrod,
+		config.TestDB.Name,
+		config.TestDB.Port,
 	)
 
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
