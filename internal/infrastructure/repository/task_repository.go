@@ -9,8 +9,8 @@ import (
 type TaskRepository interface {
 	GetAllTasks() ([]domain.Task, error)
 	GetTaskById(taksId uint) (*domain.Task, error)
-	CreateTask(domain.Task) error
-	UpdateTask(domain.Task) (*domain.Task, error)
+	CreateTask(task domain.Task) error
+	UpdateTask(task domain.Task) (*domain.Task, error)
 	DeleteTask(taskId uint) error
 }
 
@@ -19,8 +19,12 @@ type taskRepository struct {
 }
 
 // CreateTask implements TaskRepository.
-func (t *taskRepository) CreateTask(domain.Task) error {
-	panic("unimplemented")
+func (t *taskRepository) CreateTask(task domain.Task) error {
+	if err := t.db.Create(&task).Error; err != nil {
+		return err
+	}
+
+	return nil
 }
 
 // DeleteTask implements TaskRepository.
@@ -44,7 +48,7 @@ func (t *taskRepository) GetTaskById(taskId uint) (*domain.Task, error) {
 }
 
 // UpdateTask implements TaskRepository.
-func (t *taskRepository) UpdateTask(domain.Task) (*domain.Task, error) {
+func (t *taskRepository) UpdateTask(task domain.Task) (*domain.Task, error) {
 	panic("unimplemented")
 }
 

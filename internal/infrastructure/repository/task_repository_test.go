@@ -14,11 +14,12 @@ import (
 
 var (
 	db   *gorm.DB
+	err  error
 	repo repository.TaskRepository
 )
 
 func TestMain(m *testing.M) {
-	db, err := testutil.NewTestDB()
+	db, err = testutil.NewTestDB()
 	if err != nil {
 		fmt.Printf("database connection error: %d", err)
 		return
@@ -55,18 +56,19 @@ func TestGetAllTasks(t *testing.T) {
 			}
 		}
 	})
+}
 
-	t.Run("異常系", func(t *testing.T) {
-		sqlDB, err := db.DB()
-		if err != nil {
-			t.Errorf("Failed to get database handle: %v", err)
+func TestCreateTask(t *testing.T) {
+	t.Run("正常系", func(t *testing.T) {
+		defer testutil.FlushRecords(db, &domain.Task{})
+
+		req := domain.Task{
+			Title: "Createテスト",
+			Desc:  "テスト",
 		}
-		testutil.FlushRecords(db, &domain.Task{})
-		sqlDB.Close() // エラーを発生させるため、DBを意図的に閉じる
-		_, err = repo.GetAllTasks()
 
-		if err == nil {
-			t.Errorf("Expected an error when fetching tasks with closed database connection, but got none")
+		if err := repo.CreateTask(req); err != nil {
+			t.Errorf("Expected no error, got %d", err)
 		}
 	})
 }

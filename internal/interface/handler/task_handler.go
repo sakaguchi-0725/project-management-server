@@ -8,6 +8,8 @@ import (
 	"github.com/labstack/echo/v4"
 	"github.com/sakaguchi-0725/go-todo/internal/interface/dto"
 	"github.com/sakaguchi-0725/go-todo/internal/usecase"
+	"github.com/sakaguchi-0725/go-todo/internal/usecase/input"
+	"github.com/sakaguchi-0725/go-todo/pkg/apperr"
 )
 
 type TaskHandler interface {
@@ -24,7 +26,20 @@ type taskHandler struct {
 
 // CreateTask implements TaskHandler.
 func (t *taskHandler) CreateTask(c echo.Context) error {
-	panic("unimplemented")
+	var req dto.TaskRequest
+	if err := c.Bind(&req); err != nil {
+		return apperr.NewAppError(http.StatusBadRequest, apperr.ErrCategoryCreateTaskInvalidParameter, err.Error())
+	}
+
+	input := input.TaskInput{
+		Title: req.Title,
+		Desc:  req.Desc,
+	}
+	if err := t.tu.CreateTask(input); err != nil {
+		return err
+	}
+
+	return c.JSON(http.StatusCreated, nil)
 }
 
 // DeleteTask implements TaskHandler.

@@ -35,17 +35,17 @@ func (m *MockTaskRepository) EXPECT() *MockTaskRepositoryMockRecorder {
 }
 
 // CreateTask mocks base method.
-func (m *MockTaskRepository) CreateTask(arg0 domain.Task) error {
+func (m *MockTaskRepository) CreateTask(task domain.Task) error {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "CreateTask", arg0)
+	ret := m.ctrl.Call(m, "CreateTask", task)
 	ret0, _ := ret[0].(error)
 	return ret0
 }
 
 // CreateTask indicates an expected call of CreateTask.
-func (mr *MockTaskRepositoryMockRecorder) CreateTask(arg0 interface{}) *gomock.Call {
+func (mr *MockTaskRepositoryMockRecorder) CreateTask(task interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateTask", reflect.TypeOf((*MockTaskRepository)(nil).CreateTask), arg0)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateTask", reflect.TypeOf((*MockTaskRepository)(nil).CreateTask), task)
 }
 
 // DeleteTask mocks base method.
@@ -93,16 +93,16 @@ func (mr *MockTaskRepositoryMockRecorder) GetTaskById(taksId interface{}) *gomoc
 }
 
 // UpdateTask mocks base method.
-func (m *MockTaskRepository) UpdateTask(arg0 domain.Task) (*domain.Task, error) {
+func (m *MockTaskRepository) UpdateTask(task domain.Task) (*domain.Task, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "UpdateTask", arg0)
+	ret := m.ctrl.Call(m, "UpdateTask", task)
 	ret0, _ := ret[0].(*domain.Task)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
 // UpdateTask indicates an expected call of UpdateTask.
-func (mr *MockTaskRepositoryMockRecorder) UpdateTask(arg0 interface{}) *gomock.Call {
+func (mr *MockTaskRepositoryMockRecorder) UpdateTask(task interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateTask", reflect.TypeOf((*MockTaskRepository)(nil).UpdateTask), arg0)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateTask", reflect.TypeOf((*MockTaskRepository)(nil).UpdateTask), task)
 }
