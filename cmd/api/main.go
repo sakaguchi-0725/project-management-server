@@ -31,5 +31,6 @@ func main() {
 
 	t := e.Group("/tasks")
 	t.GET("", taskHandler.GetAllTasks)
+	t.POST("", taskHandler.CreateTask)
 	e.Logger.Fatal(e.Start(":8080"))
 }
