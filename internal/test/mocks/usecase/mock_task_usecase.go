@@ -9,6 +9,7 @@ import (
 
 	gomock "github.com/golang/mock/gomock"
 	domain "github.com/sakaguchi-0725/go-todo/internal/domain"
+	input "github.com/sakaguchi-0725/go-todo/internal/usecase/input"
 )
 
 // MockTaskUsecase is a mock of TaskUsecase interface.
@@ -35,17 +36,17 @@ func (m *MockTaskUsecase) EXPECT() *MockTaskUsecaseMockRecorder {
 }
 
 // CreateTask mocks base method.
-func (m *MockTaskUsecase) CreateTask(arg0 domain.Task) error {
+func (m *MockTaskUsecase) CreateTask(input input.TaskInput) error {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "CreateTask", arg0)
+	ret := m.ctrl.Call(m, "CreateTask", input)
 	ret0, _ := ret[0].(error)
 	return ret0
 }
 
 // CreateTask indicates an expected call of CreateTask.
-func (mr *MockTaskUsecaseMockRecorder) CreateTask(arg0 interface{}) *gomock.Call {
+func (mr *MockTaskUsecaseMockRecorder) CreateTask(input interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateTask", reflect.TypeOf((*MockTaskUsecase)(nil).CreateTask), arg0)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateTask", reflect.TypeOf((*MockTaskUsecase)(nil).CreateTask), input)
 }
 
 // DeleteTask mocks base method.

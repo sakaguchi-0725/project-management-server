@@ -9,6 +9,7 @@ import (
 	"github.com/sakaguchi-0725/go-todo/internal/domain"
 	mocks "github.com/sakaguchi-0725/go-todo/internal/test/mocks/repository"
 	"github.com/sakaguchi-0725/go-todo/internal/usecase"
+	"github.com/sakaguchi-0725/go-todo/internal/usecase/input"
 )
 
 var (
@@ -62,6 +63,36 @@ func TestGetAllTasks(t *testing.T) {
 
 		if err != nil && err.Error() != "データの取得に失敗しました" {
 			t.Errorf("Unexpected error message: got '%s', want 'データの取得に失敗しました'", err.Error())
+		}
+	})
+}
+
+func TestCreateTask(t *testing.T) {
+	req := input.TaskInput{
+		Title: "Createテスト",
+		Desc:  "テスト",
+	}
+
+	t.Run("正常系", func(t *testing.T) {
+		mockRepo.EXPECT().CreateTask(gomock.Any()).
+			Return(nil).Times(1)
+
+		if err := taskUsecase.CreateTask(req); err != nil {
+			t.Errorf("Expect no errors, got %d", err)
+		}
+	})
+
+	t.Run("異常系", func(t *testing.T) {
+		mockRepo.EXPECT().CreateTask(gomock.Any()).
+			Return(errors.New("データの作成に失敗しました")).Times(1)
+
+		err := taskUsecase.CreateTask(req)
+		if err == nil {
+			t.Error("Expected an error from GetAllTasks, but received none")
+		}
+
+		if err != nil && err.Error() != "データの作成に失敗しました" {
+			t.Errorf("Unexpected error message: got '%s', want 'データの作成に失敗しました'", err.Error())
 		}
 	})
 }
