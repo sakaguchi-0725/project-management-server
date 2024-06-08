@@ -9,12 +9,12 @@ import (
 	"github.com/sakaguchi-0725/go-todo/internal/interface/handler"
 	"github.com/sakaguchi-0725/go-todo/internal/interface/middleware"
 	"github.com/sakaguchi-0725/go-todo/internal/usecase"
-	"github.com/sakaguchi-0725/go-todo/pkg"
+	"github.com/sakaguchi-0725/go-todo/pkg/config"
 	"go.uber.org/zap"
 )
 
 func main() {
-	pkg.LoadEnv()
+	config.LoadConfig()
 	logger, err := zap.NewProduction()
 	if err != nil {
 		log.Fatalf("Loggerの初期化に失敗しました: %v", err)

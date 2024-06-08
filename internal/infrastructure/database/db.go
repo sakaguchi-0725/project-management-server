@@ -3,8 +3,8 @@ package database
 import (
 	"fmt"
 	"log"
-	"os"
 
+	"github.com/sakaguchi-0725/go-todo/pkg/config"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
@@ -12,11 +12,11 @@ import (
 func NewDB() *gorm.DB {
 	dsn := fmt.Sprintf(
 		"host=%s user=%s password=%s dbname=%s port=%s sslmode=disable",
-		os.Getenv("DB_HOST"),
-		os.Getenv("DB_USER"),
-		os.Getenv("DB_PASSWORD"),
-		os.Getenv("DB_NAME"),
-		os.Getenv("DB_PORT"),
+		config.DB.Host,
+		config.DB.User,
+		config.DB.Passwrod,
+		config.DB.Name,
+		config.DB.Port,
 	)
 
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
