@@ -5,6 +5,7 @@ import (
 	"log"
 	"os"
 	"testing"
+	"time"
 
 	"github.com/sakaguchi-0725/go-todo/internal/domain"
 	"github.com/sakaguchi-0725/go-todo/internal/infrastructure/repository"
@@ -69,6 +70,32 @@ func TestCreateTask(t *testing.T) {
 
 		if err := repo.CreateTask(req); err != nil {
 			t.Errorf("Expected no error, got %d", err)
+		}
+	})
+}
+
+func TestUpdateTask(t *testing.T) {
+	mockData := []*domain.Task{
+		{
+			ID:        1,
+			Title:     "テスト",
+			Desc:      "",
+			CreatedAt: time.Now(),
+		},
+	}
+	createTestData(mockData)
+
+	t.Run("正常系", func(t *testing.T) {
+		defer testutil.FlushRecords(db, &domain.Task{})
+
+		req := domain.Task{
+			ID:    1,
+			Title: "テスト",
+			Desc:  "更新テスト",
+		}
+
+		if err := repo.UpdateTask(req); err != nil {
+			t.Errorf("Expected no error, got %v", err)
 		}
 	})
 }

@@ -10,7 +10,7 @@ type TaskRepository interface {
 	GetAllTasks() ([]domain.Task, error)
 	GetTaskById(taksId uint) (*domain.Task, error)
 	CreateTask(task domain.Task) error
-	UpdateTask(task domain.Task) (*domain.Task, error)
+	UpdateTask(task domain.Task) error
 	DeleteTask(taskId uint) error
 }
 
@@ -48,8 +48,11 @@ func (t *taskRepository) GetTaskById(taskId uint) (*domain.Task, error) {
 }
 
 // UpdateTask implements TaskRepository.
-func (t *taskRepository) UpdateTask(task domain.Task) (*domain.Task, error) {
-	panic("unimplemented")
+func (t *taskRepository) UpdateTask(task domain.Task) error {
+	if err := t.db.Save(&task).Error; err != nil {
+		return err
+	}
+	return nil
 }
 
 func NewTaskRepository(db *gorm.DB) TaskRepository {

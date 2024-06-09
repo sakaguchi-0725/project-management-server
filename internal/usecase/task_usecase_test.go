@@ -88,11 +88,41 @@ func TestCreateTask(t *testing.T) {
 
 		err := taskUsecase.CreateTask(req)
 		if err == nil {
-			t.Error("Expected an error from GetAllTasks, but received none")
+			t.Error("Expected an error from CreateTask, but received none")
 		}
 
 		if err != nil && err.Error() != "データの作成に失敗しました" {
 			t.Errorf("Unexpected error message: got '%s', want 'データの作成に失敗しました'", err.Error())
+		}
+	})
+}
+
+func TestUpdateTask(t *testing.T) {
+	req := input.TaskInput{
+		ID:    1,
+		Title: "テスト",
+		Desc:  "",
+	}
+	t.Run("正常系", func(t *testing.T) {
+		mockRepo.EXPECT().UpdateTask(gomock.Any()).Return(nil).Times(1)
+
+		err := taskUsecase.UpdateTask(req)
+		if err != nil {
+			t.Errorf("Expect no error, got %v", err)
+		}
+	})
+
+	t.Run("異常系", func(t *testing.T) {
+		mockRepo.EXPECT().UpdateTask(gomock.Any()).
+			Return(errors.New("更新失敗")).Times(1)
+
+		err := taskUsecase.UpdateTask(req)
+		if err == nil {
+			t.Errorf("Expected an error from UpdateTask, but received none")
+		}
+
+		if err.Error() != "更新失敗" {
+			t.Errorf("Unexpected error message: got '%s', want '更新失敗'", err.Error())
 		}
 	})
 }

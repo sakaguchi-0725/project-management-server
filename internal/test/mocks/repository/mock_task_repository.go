@@ -93,12 +93,11 @@ func (mr *MockTaskRepositoryMockRecorder) GetTaskById(taksId interface{}) *gomoc
 }
 
 // UpdateTask mocks base method.
-func (m *MockTaskRepository) UpdateTask(task domain.Task) (*domain.Task, error) {
+func (m *MockTaskRepository) UpdateTask(task domain.Task) error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "UpdateTask", task)
-	ret0, _ := ret[0].(*domain.Task)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	ret0, _ := ret[0].(error)
+	return ret0
 }
 
 // UpdateTask indicates an expected call of UpdateTask.

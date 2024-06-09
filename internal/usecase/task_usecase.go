@@ -11,7 +11,7 @@ type TaskUsecase interface {
 	GetAllTasks() ([]domain.Task, error)
 	GetTaskById(taskId uint) (*domain.Task, error)
 	CreateTask(input input.TaskInput) error
-	UpdateTask(domain.Task) (*domain.Task, error)
+	UpdateTask(input input.TaskInput) error
 	DeleteTask(taskId uint) error
 }
 
@@ -54,8 +54,18 @@ func (t *taskUsecase) GetTaskById(taskId uint) (*domain.Task, error) {
 }
 
 // UpdateTask implements TaskUsecase.
-func (t *taskUsecase) UpdateTask(domain.Task) (*domain.Task, error) {
-	panic("unimplemented")
+func (t *taskUsecase) UpdateTask(input input.TaskInput) error {
+	task := domain.Task{
+		ID:    input.ID,
+		Title: input.Title,
+		Desc:  input.Desc,
+	}
+
+	if err := t.tr.UpdateTask(task); err != nil {
+		return err
+	}
+
+	return nil
 }
 
 func NewTaskUsecase(tr repository.TaskRepository) TaskUsecase {

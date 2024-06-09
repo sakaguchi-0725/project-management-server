@@ -94,16 +94,15 @@ func (mr *MockTaskUsecaseMockRecorder) GetTaskById(taskId interface{}) *gomock.C
 }
 
 // UpdateTask mocks base method.
-func (m *MockTaskUsecase) UpdateTask(arg0 domain.Task) (*domain.Task, error) {
+func (m *MockTaskUsecase) UpdateTask(input input.TaskInput) error {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "UpdateTask", arg0)
-	ret0, _ := ret[0].(*domain.Task)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	ret := m.ctrl.Call(m, "UpdateTask", input)
+	ret0, _ := ret[0].(error)
+	return ret0
 }
 
 // UpdateTask indicates an expected call of UpdateTask.
-func (mr *MockTaskUsecaseMockRecorder) UpdateTask(arg0 interface{}) *gomock.Call {
+func (mr *MockTaskUsecaseMockRecorder) UpdateTask(input interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateTask", reflect.TypeOf((*MockTaskUsecase)(nil).UpdateTask), arg0)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateTask", reflect.TypeOf((*MockTaskUsecase)(nil).UpdateTask), input)
 }

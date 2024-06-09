@@ -28,7 +28,7 @@ type taskHandler struct {
 func (t *taskHandler) CreateTask(c echo.Context) error {
 	var req dto.TaskRequest
 	if err := c.Bind(&req); err != nil {
-		return apperr.NewAppError(http.StatusBadRequest, apperr.ErrCategoryCreateTaskInvalidParameter, err.Error())
+		return apperr.NewAppError(apperr.ErrBadRequest, apperr.ErrCategoryCreateTaskInvalidParameter, err.Error())
 	}
 
 	input := input.TaskInput{
@@ -75,7 +75,23 @@ func (t *taskHandler) GetTaskById(c echo.Context) error {
 
 // UpdateTask implements TaskHandler.
 func (t *taskHandler) UpdateTask(c echo.Context) error {
-	panic("unimplemented")
+	var req dto.TaskRequest
+	if err := c.Bind(&req); err != nil {
+		return apperr.NewAppError(apperr.ErrBadRequest, apperr.ErrCategoryUpdateTaskInvalidParameter, err.Error())
+	}
+
+	input := input.TaskInput{
+		ID:    *req.ID,
+		Title: req.Title,
+		Desc:  req.Desc,
+	}
+
+	err := t.tu.UpdateTask(input)
+	if err != nil {
+		return err
+	}
+
+	return c.JSON(http.StatusOK, nil)
 }
 
 func NewTaskHandler(tu usecase.TaskUsecase) TaskHandler {
