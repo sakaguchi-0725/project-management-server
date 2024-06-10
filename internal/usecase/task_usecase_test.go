@@ -126,3 +126,28 @@ func TestUpdateTask(t *testing.T) {
 		}
 	})
 }
+
+func TestDeleteTask(t *testing.T) {
+	t.Run("正常系", func(t *testing.T) {
+		mockRepo.EXPECT().DeleteTask(gomock.Any()).Return(nil).Times(1)
+
+		err := taskUsecase.DeleteTask(1)
+		if err != nil {
+			t.Errorf("Expect no error, got %v", err)
+		}
+	})
+
+	t.Run("異常系", func(t *testing.T) {
+		mockRepo.EXPECT().DeleteTask(gomock.Any()).
+			Return(errors.New("削除失敗")).Times(1)
+
+		err := taskUsecase.DeleteTask(1)
+		if err == nil {
+			t.Errorf("Expected an error from DeleteTask, but received none")
+		}
+
+		if err.Error() != "削除失敗" {
+			t.Errorf("Unexpected error message: got '%s', want '削除失敗'", err.Error())
+		}
+	})
+}
