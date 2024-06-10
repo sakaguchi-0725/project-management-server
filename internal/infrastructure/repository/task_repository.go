@@ -29,7 +29,10 @@ func (t *taskRepository) CreateTask(task domain.Task) error {
 
 // DeleteTask implements TaskRepository.
 func (t *taskRepository) DeleteTask(taskId uint) error {
-	panic("unimplemented")
+	if err := t.db.Delete(&domain.Task{}, taskId).Error; err != nil {
+		return err
+	}
+	return nil
 }
 
 // GetAllTask implements TaskRepository.

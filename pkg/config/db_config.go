@@ -1,6 +1,11 @@
 package config
 
-import "os"
+import (
+	"log"
+	"os"
+
+	"github.com/joho/godotenv"
+)
 
 type DBConfig struct {
 	Host     string
@@ -32,6 +37,11 @@ func LoadDBConfig() {
 }
 
 func LoadTestDBConfig() {
+	err := godotenv.Load("../../../.env")
+	if err != nil {
+		log.Fatalf("環境変数の読み込みに失敗しました: %v", err)
+	}
+
 	TestDB.Host = os.Getenv("TEST_DB_HOST")
 	TestDB.Name = os.Getenv("TEST_DB_NAME")
 	TestDB.Port = os.Getenv("TEST_DB_PORT")

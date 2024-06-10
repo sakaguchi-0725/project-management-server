@@ -10,6 +10,7 @@ import (
 	"github.com/sakaguchi-0725/go-todo/internal/domain"
 	"github.com/sakaguchi-0725/go-todo/internal/infrastructure/repository"
 	testutil "github.com/sakaguchi-0725/go-todo/internal/test/util"
+	"github.com/sakaguchi-0725/go-todo/pkg/config"
 	"gorm.io/gorm"
 )
 
@@ -20,6 +21,7 @@ var (
 )
 
 func TestMain(m *testing.M) {
+	config.LoadTestDBConfig()
 	db, err = testutil.NewTestDB()
 	if err != nil {
 		fmt.Printf("database connection error: %d", err)
@@ -96,6 +98,23 @@ func TestUpdateTask(t *testing.T) {
 
 		if err := repo.UpdateTask(req); err != nil {
 			t.Errorf("Expected no error, got %v", err)
+		}
+	})
+}
+
+func TestDeleteTask(t *testing.T) {
+	mockData := []*domain.Task{
+		{
+			ID:    1,
+			Title: "削除テスト",
+			Desc:  "",
+		},
+	}
+	createTestData(mockData)
+
+	t.Run("正常系", func(t *testing.T) {
+		if err := repo.DeleteTask(1); err != nil {
+			t.Errorf("Expect no error, got %v", err)
 		}
 	})
 }
