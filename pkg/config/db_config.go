@@ -1,7 +1,7 @@
 package config
 
 import (
-	"log"
+	"fmt"
 	"os"
 
 	"github.com/joho/godotenv"
@@ -39,7 +39,7 @@ func LoadDBConfig() {
 func LoadTestDBConfig() {
 	err := godotenv.Load("../../../.env")
 	if err != nil {
-		log.Fatalf("環境変数の読み込みに失敗しました: %v", err)
+		fmt.Printf("環境変数の読み込みに失敗しました: %v\n", err)
 	}
 
 	TestDB.Host = os.Getenv("TEST_DB_HOST")
