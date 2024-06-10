@@ -3,6 +3,7 @@ package handler
 
 import (
 	"net/http"
+	"strconv"
 	"time"
 
 	"github.com/labstack/echo/v4"
@@ -44,7 +45,17 @@ func (t *taskHandler) CreateTask(c echo.Context) error {
 
 // DeleteTask implements TaskHandler.
 func (t *taskHandler) DeleteTask(c echo.Context) error {
-	panic("unimplemented")
+	id := c.Param("taskId")
+	taskId, err := strconv.Atoi(id)
+	if err != nil {
+		return apperr.NewAppError(apperr.ErrBadRequest, apperr.ErrCategoryDeleteTaskInvalidParameter, err.Error())
+	}
+
+	if err := t.tu.DeleteTask(uint(taskId)); err != nil {
+		return err
+	}
+
+	return c.NoContent(http.StatusOK)
 }
 
 // GetAllTask implements TaskHandler.

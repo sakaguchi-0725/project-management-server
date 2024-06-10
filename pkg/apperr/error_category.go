@@ -13,9 +13,11 @@ func MakeCategory(err AppError) string {
 const (
 	ErrCategoryCreateTaskInvalidParameter ErrorCategory = iota + 1
 	ErrCategoryUpdateTaskInvalidParameter
+	ErrCategoryDeleteTaskInvalidParameter
 )
 
 var categoryMap = map[ErrorCategory]string{
 	ErrCategoryCreateTaskInvalidParameter: "CreateTask/InvalidParameter",
 	ErrCategoryUpdateTaskInvalidParameter: "UpdateTask/InvalidParameter",
+	ErrCategoryDeleteTaskInvalidParameter: "DeleteTask/InvalidParameter",
 }

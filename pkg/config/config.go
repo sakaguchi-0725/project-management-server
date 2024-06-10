@@ -13,5 +13,4 @@ func LoadConfig() {
 	}
 
 	LoadDBConfig()
-	LoadDBConfig()
 }

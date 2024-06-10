@@ -35,7 +35,11 @@ func (t *taskUsecase) CreateTask(input input.TaskInput) error {
 
 // DeleteTask implements TaskUsecase.
 func (t *taskUsecase) DeleteTask(taskId uint) error {
-	panic("unimplemented")
+	if err := t.tr.DeleteTask(taskId); err != nil {
+		return err
+	}
+
+	return nil
 }
 
 // GetAllTask implements TaskUsecase.
