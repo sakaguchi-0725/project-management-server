@@ -54,7 +54,12 @@ func (t *taskUsecase) GetAllTasks() ([]domain.Task, error) {
 
 // GetTaskById implements TaskUsecase.
 func (t *taskUsecase) GetTaskById(taskId uint) (*domain.Task, error) {
-	panic("unimplemented")
+	task, err := t.tr.GetTaskById(taskId)
+	if err != nil {
+		return nil, err
+	}
+
+	return task, nil
 }
 
 // UpdateTask implements TaskUsecase.
