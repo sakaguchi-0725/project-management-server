@@ -14,10 +14,12 @@ const (
 	ErrCategoryCreateTaskInvalidParameter ErrorCategory = iota + 1
 	ErrCategoryUpdateTaskInvalidParameter
 	ErrCategoryDeleteTaskInvalidParameter
+	ErrCategoryGetTaskByIdInvalidParameter
 )
 
 var categoryMap = map[ErrorCategory]string{
-	ErrCategoryCreateTaskInvalidParameter: "CreateTask/InvalidParameter",
-	ErrCategoryUpdateTaskInvalidParameter: "UpdateTask/InvalidParameter",
-	ErrCategoryDeleteTaskInvalidParameter: "DeleteTask/InvalidParameter",
+	ErrCategoryCreateTaskInvalidParameter:  "CreateTask/InvalidParameter",
+	ErrCategoryUpdateTaskInvalidParameter:  "UpdateTask/InvalidParameter",
+	ErrCategoryDeleteTaskInvalidParameter:  "DeleteTask/InvalidParameter",
+	ErrCategoryGetTaskByIdInvalidParameter: "GetTaskById/InvalidParameter",
 }
