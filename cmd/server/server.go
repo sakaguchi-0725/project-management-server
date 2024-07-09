@@ -24,6 +24,7 @@ func NewServer(handlers AppHandlers) *echo.Echo {
 
 	t := e.Group("/tasks")
 	t.GET("", handlers.TaskHandler.GetAllTasks)
+	t.GET("/:taskId", handlers.TaskHandler.GetTaskById)
 	t.POST("", handlers.TaskHandler.CreateTask)
 	t.PUT("/:taskId", handlers.TaskHandler.UpdateTask)
 	t.DELETE("/:taskId", handlers.TaskHandler.DeleteTask)

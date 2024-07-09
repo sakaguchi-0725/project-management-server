@@ -193,3 +193,44 @@ func TestDeleteTask(t *testing.T) {
 		}
 	})
 }
+
+func TestGetTaskById(t *testing.T) {
+	res := &domain.Task{
+		ID:    1,
+		Title: "テストタイトル",
+		Desc:  "",
+	}
+	t.Run("200", func(t *testing.T) {
+		req := httptest.NewRequest(http.MethodGet, "/tasks/1", nil)
+		rec := httptest.NewRecorder()
+		req.Header.Set("Content-Type", "application/json")
+		mockUsecase.EXPECT().GetTaskById(gomock.Any()).Return(res, nil).Times(1)
+		e.ServeHTTP(rec, req)
+
+		if rec.Code != http.StatusOK {
+			t.Errorf("Expected status code %d, got %d", http.StatusOK, rec.Code)
+		}
+	})
+
+	t.Run("400", func(t *testing.T) {
+		req := httptest.NewRequest(http.MethodGet, "/tasks/hoge", nil)
+		req.Header.Set("Content-Type", "application/json")
+		rec := httptest.NewRecorder()
+		e.ServeHTTP(rec, req)
+
+		if rec.Code != http.StatusBadRequest {
+			t.Errorf("Expected status code %d, got %d", http.StatusBadRequest, rec.Code)
+		}
+	})
+
+	t.Run("500", func(t *testing.T) {
+		req := httptest.NewRequest(http.MethodGet, "/tasks/1", nil)
+		rec := httptest.NewRecorder()
+		mockUsecase.EXPECT().GetTaskById(gomock.Any()).Return(nil, errors.New("取得失敗")).Times(1)
+		e.ServeHTTP(rec, req)
+
+		if rec.Code != http.StatusInternalServerError {
+			t.Errorf("Expected status code %d, got %d", http.StatusInternalServerError, rec.Code)
+		}
+	})
+}

@@ -81,7 +81,18 @@ func (t *taskHandler) GetAllTasks(c echo.Context) error {
 
 // GetTaskById implements TaskHandler.
 func (t *taskHandler) GetTaskById(c echo.Context) error {
-	panic("unimplemented")
+	id := c.Param("taskId")
+	taskId, err := strconv.Atoi(id)
+	if err != nil {
+		return apperr.NewAppError(apperr.ErrBadRequest, apperr.ErrCategoryGetTaskByIdInvalidParameter, err.Error())
+	}
+
+	task, err := t.tu.GetTaskById(uint(taskId))
+	if err != nil {
+		return err
+	}
+
+	return c.JSON(http.StatusOK, task)
 }
 
 // UpdateTask implements TaskHandler.

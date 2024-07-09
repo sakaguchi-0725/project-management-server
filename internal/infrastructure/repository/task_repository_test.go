@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"reflect"
 	"testing"
 	"time"
 
@@ -103,6 +104,8 @@ func TestUpdateTask(t *testing.T) {
 }
 
 func TestDeleteTask(t *testing.T) {
+	defer testutil.FlushRecords(db, &domain.Task{})
+
 	mockData := []*domain.Task{
 		{
 			ID:    1,
@@ -115,6 +118,35 @@ func TestDeleteTask(t *testing.T) {
 	t.Run("正常系", func(t *testing.T) {
 		if err := repo.DeleteTask(1); err != nil {
 			t.Errorf("Expect no error, got %v", err)
+		}
+	})
+}
+
+func TestGetTaskById(t *testing.T) {
+	defer testutil.FlushRecords(db, &domain.Task{})
+
+	mockData := []*domain.Task{
+		{
+			ID:    1,
+			Title: "テスト1",
+			Desc:  "",
+		},
+		{
+			ID:    2,
+			Title: "テスト2",
+			Desc:  "",
+		},
+	}
+	createTestData(mockData)
+
+	t.Run("正常系", func(t *testing.T) {
+		task, err := repo.GetTaskById(1)
+		if err != nil {
+			t.Errorf("Expect no error, got %v", err)
+		}
+
+		if !reflect.DeepEqual(task, mockData[0]) {
+			t.Errorf("Expected task to be %+v, got %+v", mockData[0], task)
 		}
 	})
 }

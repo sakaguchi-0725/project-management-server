@@ -47,7 +47,12 @@ func (t *taskRepository) GetAllTasks() ([]domain.Task, error) {
 
 // GetTaskById implements TaskRepository.
 func (t *taskRepository) GetTaskById(taskId uint) (*domain.Task, error) {
-	panic("unimplemented")
+	var task domain.Task
+	if err := t.db.Where("id = ?", taskId).First(&task).Error; err != nil {
+		return nil, err
+	}
+
+	return &task, nil
 }
 
 // UpdateTask implements TaskRepository.

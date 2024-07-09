@@ -151,3 +151,30 @@ func TestDeleteTask(t *testing.T) {
 		}
 	})
 }
+
+func TestGetTaskById(t *testing.T) {
+	res := &domain.Task{ID: 1, Title: "テスト01"}
+	t.Run("正常系", func(t *testing.T) {
+		mockRepo.EXPECT().GetTaskById(uint(1)).
+			Return(res, nil).Times(1)
+
+		_, err := taskUsecase.GetTaskById(uint(1))
+		if err != nil {
+			t.Errorf("Expect no error, got %v", err)
+		}
+	})
+
+	t.Run("異常系", func(t *testing.T) {
+		mockRepo.EXPECT().GetTaskById(gomock.Any()).
+			Return(nil, errors.New("取得失敗")).Times(1)
+
+		_, err := taskUsecase.GetTaskById(1)
+		if err == nil {
+			t.Errorf("Expected an error from GetTaskById, but received none")
+		}
+
+		if err.Error() != "取得失敗" {
+			t.Errorf("Unexpected error message: got '%s', want '取得失敗'", err.Error())
+		}
+	})
+}
